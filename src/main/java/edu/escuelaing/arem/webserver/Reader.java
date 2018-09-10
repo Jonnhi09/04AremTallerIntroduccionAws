@@ -54,7 +54,7 @@ public class Reader {
      */
     public static byte[] imageReader(String ruta) throws IOException {
         byte[] bytesPage = new byte[]{};
-        File image = new File("./resources/" + ruta + ".png");
+        File image = new File("resources/" + ruta + ".png");
         FileInputStream inputImage = new FileInputStream(image.getPath());
         bytesPage = new byte[(int) image.length()];
         inputImage.read(bytesPage);

@@ -5,13 +5,16 @@
  */
 package edu.escuelaing.arem.webserver;
 
-/**
- *
- * @author jonnh
- */
 import java.net.*;
 import java.io.*;
 
+/**
+ * La clase HttpServer se comporta como un servidor web, el cual recibe
+ * peticiones por medio del protocolo http y responde con recursos html y png
+ * usando este mismo protocolo.
+ *
+ * @author Jonathan Prieto
+ */
 public class HttpServer {
 
     public static void main(String[] args) throws IOException {
@@ -38,33 +41,42 @@ public class HttpServer {
                             clientSocket.getInputStream()
                     ));
             String inputLine, outputLine;
-//            while ((inputLine = in.readLine()) != null) {
-//                System.out.println("Recibí: " + inputLine);
-//                if (!in.ready()) {
-//                    break;
-//                }
-//            }
+            //Leer la peticion que hace el cliente.
             inputLine = in.readLine();
-            if (Reader.existWord("png", inputLine)) {
-                out.println(new String(Reader.imageReader(Reader.searchResource(inputLine))));
+            //Se busca en el encabezado de la peticion para saber si el recurso solicitado es png o html.
+            if (Search.existWord("png", inputLine)) {
+                byte[] image = Reader.imageReader(Search.searchResource(inputLine));
+                DataOutputStream binaryOut;
+                binaryOut = new DataOutputStream(clientSocket.getOutputStream());
+                binaryOut.writeBytes("HTTP/1.1 200 OK \r\n");
+                binaryOut.writeBytes("Content-Type: image/png\r\n");
+                binaryOut.writeBytes("Content-Length: " + image.length);
+                binaryOut.writeBytes("\r\n\r\n");
+                binaryOut.write(image);
+                binaryOut.close();
             } else {
                 try {
-                    out.println(Reader.htmlReader(Reader.searchResource(inputLine)));
+                    out.println(Reader.htmlReader(Search.searchResource(inputLine)));
                 } catch (Exception e) {
                     out.println("HTTP/1.1 404 OK\r\n"
                             + "Content-Type: text/html\r\n"
                             + "\r\n");
                 }
             }
-            //outputLine = "";
-            //out.println(outputLine);
             out.close();
             in.close();
             clientSocket.close();
             serverSocket.close();
         }
     }
-    
+
+    /**
+     * La siguiente funcion retorna un numero entero, que correspondera al
+     * puerto por el cual se establecera la comunicacion entre el cliente y el
+     * servidor.
+     *
+     * @return int
+     */
     public static int getPort() {
         if (System.getenv("PORT") != null) {
             return Integer.parseInt(System.getenv("PORT"));

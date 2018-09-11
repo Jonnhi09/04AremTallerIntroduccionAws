@@ -3,17 +3,34 @@
     <head>
         <title>App</title>
         <meta charset=UTF-8>
+        <style>
+            body {
+                background-color: snow;
+            }
+
+            h1 {
+                color: MidnightBlue;
+                text-align: center;
+            }
+
+            p {
+                font-family: verdana;
+                font-size: 20px;
+            }
+        </style>
     </head>
     <body>
-        <h2>Estadísticos</h2>
-		<form action=estadisticos.png>
-			<input type=submit value=Imagen>
-		</form>
-        <p>La siguiente aplicación web calcula la media y desviación estándar de un conjunto de números reales.<br /> Éstos se podrán ingresar en el siguiente campo, separándolos por “ , “ e.g., 21,3,5,9,...</p>
+        <h1>Estadísticos</h1>
+        <p>La siguiente aplicación web calcula la media y desviación estándar de un conjunto de números reales.<br /> <br /> Éstos se podrán ingresar en el siguiente campo, separándolos por “ , “ e.g., 21,3,5,9,...</p>
         <form action="/result" >
-               Conjunto de números:<br>
+            Conjunto de números:<br>
             <input type=text name=realNumber value=""><br><br>
             <input type=submit value=Calcular>
         </form>
+        <p>La siguiente imagen muestra cómo se calcula la media y desviación estándar de una colección de números.</p>
+        <form action="/result" >
+            <form action=estadisticos.png>
+                <input type=submit value=Imagen>
+            </form>
     </body>
 </html>

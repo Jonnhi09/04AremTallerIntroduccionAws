@@ -43,24 +43,30 @@ public class HttpServer {
             String inputLine, outputLine;
             //Leer la peticion que hace el cliente.
             inputLine = in.readLine();
+            System.out.println(inputLine);
             //Se busca en el encabezado de la peticion para saber si el recurso solicitado es png o html.
-            if (Search.existWord("png", inputLine)) {
-                byte[] image = Reader.imageReader(Search.searchResource(inputLine));
-                DataOutputStream binaryOut;
-                binaryOut = new DataOutputStream(clientSocket.getOutputStream());
-                binaryOut.writeBytes("HTTP/1.1 200 OK \r\n");
-                binaryOut.writeBytes("Content-Type: image/png\r\n");
-                binaryOut.writeBytes("Content-Length: " + image.length);
-                binaryOut.writeBytes("\r\n\r\n");
-                binaryOut.write(image);
-                binaryOut.close();
-            } else {
-                try {
-                    out.println(Reader.htmlReader(Search.searchResource(inputLine)));
-                } catch (Exception e) {
-                    out.println("HTTP/1.1 404 OK\r\n"
-                            + "Content-Type: text/html\r\n"
-                            + "\r\n");
+            if (inputLine.contains("GET")) {
+                String[] encabezado = inputLine.split(" ");
+                String recusro = encabezado[1];
+                System.out.println("");
+                if (recusro.contains("png")) {
+                    byte[] image = Reader.imageReader(Search.searchResource(inputLine));
+                    DataOutputStream binaryOut;
+                    binaryOut = new DataOutputStream(clientSocket.getOutputStream());
+                    binaryOut.writeBytes("HTTP/1.1 200 OK \r\n");
+                    binaryOut.writeBytes("Content-Type: image/png\r\n");
+                    binaryOut.writeBytes("Content-Length: " + image.length);
+                    binaryOut.writeBytes("\r\n\r\n");
+                    binaryOut.write(image);
+                    binaryOut.close();
+                } else {
+                    try {
+                        out.println(Reader.htmlReader(Search.searchResource(inputLine)));
+                    } catch (Exception e) {
+                        out.println("HTTP/1.1 404 NOT FOUND\r\n"
+                                + "Content-Type: text/html\r\n"
+                                + "\r\n");
+                    }
                 }
             }
             out.close();

@@ -8,3 +8,5 @@
 ##### Descripción
 
 Para este proyecto los estudiantes deberán construir un servidor Web (tipo Apache) en Java. El servidor debe ser capaz de entregar páginas html e imágenes tipo PNG. Usando el servidor se debe construir un sitio Web de ejemplo y desplegarlo en Heroku. El servidor debe atender múltiples solicitudes no concurrentes.
+
+- En la raíz del repositorio se podrá encontrar el artículo y el modelo en astah del proyecto.

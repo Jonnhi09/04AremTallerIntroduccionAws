@@ -40,7 +40,8 @@ public class HttpServer {
                     new InputStreamReader(
                             clientSocket.getInputStream()
                     ));
-            String inputLine, outputLine;
+            String inputLine = "";
+            String outputLine = "";
             //Leer la peticion que hace el cliente.
             inputLine = in.readLine();
             System.out.println(inputLine);

@@ -2,7 +2,7 @@
 ## Arquitecturas empresariales
 ### Jonathan Prieto 
 #### Primer proyecto - Web server
-##### [Link Heroku](https://https://shielded-spire-54561.herokuapp.com/index)
+#### [Link Heroku](https://shielded-spire-54561.herokuapp.com/index)
 ---
 ##### Descripción
 

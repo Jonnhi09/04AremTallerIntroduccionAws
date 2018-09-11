@@ -40,13 +40,12 @@ public class HttpServer {
                     new InputStreamReader(
                             clientSocket.getInputStream()
                     ));
-            String inputLine = "";
-            String outputLine = "";
+            String inputLine, outputLine;
             //Leer la peticion que hace el cliente.
             inputLine = in.readLine();
             System.out.println(inputLine);
             //Se busca en el encabezado de la peticion para saber si el recurso solicitado es png o html.
-            if (inputLine.contains("GET")) {
+            if (inputLine != null && inputLine.contains("GET")) {
                 String[] encabezado = inputLine.split(" ");
                 String recusro = encabezado[1];
                 System.out.println("");

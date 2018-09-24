@@ -34,12 +34,15 @@ public class HttpServer {
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
-
+            //----
+            System.out.println("Listo para recibir ... 1");
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            System.out.println("Listo para recibir ... 2");
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
                             clientSocket.getInputStream()
                     ));
+            System.out.println("Listo para recibir ... 3");
             String inputLine, outputLine;
             //Leer la peticion que hace el cliente.
             inputLine = in.readLine();

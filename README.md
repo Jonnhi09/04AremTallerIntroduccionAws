@@ -1,12 +1,25 @@
 # Escuela Colombiana de Ingeniería Julio Garavito
 ## Arquitecturas empresariales
 ### Jonathan Prieto 
-#### Primer proyecto - Web server
-#### [Link Heroku](https://shielded-spire-54561.herokuapp.com/index)
-#### [Link Artículo](https://docs.google.com/document/d/1NT3fxBsfdaKfMVEYVUdq_Etq8P2y7IMmel3RozLP0pU/edit?usp=sharing)
+#### Taller 4 - Introducción a AWS
+#### [Link Heroku]()
+#### [Link Artículo]()
 ---
-##### Descripción
+##### Enunciado
+Se debe construir lo siguiente:
 
-Para este proyecto los estudiantes deberán construir un servidor Web (tipo Apache) en Java. El servidor debe ser capaz de entregar páginas html e imágenes tipo PNG. Usando el servidor se debe construir un sitio Web de ejemplo y desplegarlo en Heroku. El servidor debe atender múltiples solicitudes no concurrentes.
+1. [ ] Crear una máquina virtual de Linux en AWS.
 
-- En la raíz del repositorio se podrá encontrar el artículo y el modelo en astah del proyecto.
+2. [ ] Desplegar un cliente que lea URLs e imprima contenidos en consola, en la máquina virtual de AWS.
+
+3. [ ] Conectar el cliente desplegado a una aplicación Web desplegada en Heroku. usando el servidor Web que desarrolló
+
+4. [x] Modifique su servidor Web para que responda múltiples peticiones de manera concurrente.
+
+5. [ ] Modifique su cliente para probar su servidor web haciendo muchas peticiones en paralelo.
+
+6. [ ] Mida el desempeño de su servidor web variando el número de hilos que soporta y aumentando o disminuyendo el número de peticiones concurrentes.
+
+7. [ ] Mejore su servidor para soportar aplicaciones WEB Java. Use el patrón de inversión de control.
+
+- En la raíz del repositorio se podrá encontrar el artículo y los diagramas en astah que componen la arquitectura del proyecto.

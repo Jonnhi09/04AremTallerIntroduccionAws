@@ -7,73 +7,47 @@ package edu.escuelaing.arem.webserver;
 
 import java.net.*;
 import java.io.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * La clase HttpServer se comporta como un servidor web, el cual recibe
- * peticiones por medio del protocolo http y responde con recursos html y png
- * usando este mismo protocolo.
+ * peticiones por medio del protocolo http y responde de manera concurrente con
+ * recursos html y png usando este mismo protocolo.
  *
  * @author Jonathan Prieto
  */
 public class HttpServer {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        int i = 0;
+        ExecutorService es = Executors.newFixedThreadPool(10);
         while (true) {
+            i++;
             ServerSocket serverSocket = null;
             try {
                 serverSocket = new ServerSocket(getPort());
             } catch (IOException e) {
-                System.err.println("Could not listen on port: 35000.");
+                System.err.println("Could not listen on port: " + getPort());
                 System.exit(1);
             }
             Socket clientSocket = null;
             try {
-                System.out.println("Listo para recibir ...");
+                System.out.println("Listo para recibir ... " + i);
                 clientSocket = serverSocket.accept();
             } catch (IOException e) {
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
-            //----
-            System.out.println("Listo para recibir ... 1");
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            System.out.println("Listo para recibir ... 2");
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(
-                            clientSocket.getInputStream()
-                    ));
-            System.out.println("Listo para recibir ... 3");
-            String inputLine, outputLine;
-            //Leer la peticion que hace el cliente.
-            inputLine = in.readLine();
-            //Se busca en el encabezado de la peticion para saber si el recurso solicitado es png o html.
-            if (inputLine != null && inputLine.contains("GET")) {
-                String[] encabezado = inputLine.split(" ");
-                String recusro = encabezado[1];
-                if (recusro.contains("png")) {
-                    byte[] image = Reader.imageReader(Search.searchResource(inputLine));
-                    DataOutputStream binaryOut;
-                    binaryOut = new DataOutputStream(clientSocket.getOutputStream());
-                    binaryOut.writeBytes("HTTP/1.1 200 OK \r\n");
-                    binaryOut.writeBytes("Content-Type: image/png\r\n");
-                    binaryOut.writeBytes("Content-Length: " + image.length);
-                    binaryOut.writeBytes("\r\n\r\n");
-                    binaryOut.write(image);
-                    binaryOut.close();
-                } else {
-                    try {
-                        out.println(Reader.htmlReader(Search.searchResource(inputLine)));
-                    } catch (Exception e) {
-                        out.println("HTTP/1.1 404 NOT FOUND\r\n"
-                                + "Content-Type: text/html\r\n"
-                                + "\r\n");
-                    }
-                }
+            AnswerRequest ar = new AnswerRequest(clientSocket);
+            es.execute(ar);
+            try {
+                serverSocket.close();
+            } catch (IOException ex) {
+                Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            out.close();
-            in.close();
-            clientSocket.close();
-            serverSocket.close();
         }
     }
 

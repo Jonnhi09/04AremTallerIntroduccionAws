@@ -5,6 +5,7 @@
  */
 package edu.escuelaing.arem.webserver;
 
+import edu.escuelaing.arem.reflection.ReflexWebServer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,12 +31,10 @@ public class Reader {
      * @throws IOException
      */
     public static String htmlReader(String ruta) throws FileNotFoundException, IOException {
-        String html = "HTTP/1.1 200 OK\r\n"
-                + "Content-Type: text/html\r\n"
-                + "\r\n";
         FileReader fr = new FileReader("./resources/" + ruta + ".html");
         BufferedReader br = new BufferedReader(fr);
         String line = br.readLine();
+        String html = "";
         while (line != null) {
             html = html + line;
             line = br.readLine();
@@ -59,5 +58,11 @@ public class Reader {
         bytesPage = new byte[(int) image.length()];
         inputImage.read(bytesPage);
         return bytesPage;
+    }
+
+    public static String componentReader(String app, String metodo) throws Exception {
+        String component = "edu.escuelaing.arem.components." + app;
+        String args[] = {component, metodo};
+        return ReflexWebServer.component(args);
     }
 }

@@ -28,37 +28,52 @@ public class AnswerRequest implements Runnable {
         this.clientSocket = clientSocket;
     }
 
+    /**
+     * El siguiente metodo genera un encabezado http junto con los parametros
+     * status y resource.
+     *
+     * @param status
+     * @param resource
+     * @return String con el encabezado http.
+     */
+    public String header(String status, String resource) {
+        return "HTTP/1.1 " + status + " \r\n"
+                + "Content-Type: " + resource
+                + "\r\n\r\n";
+    }
+
     @Override
     public void run() {
         PrintWriter out = null;
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String inputLine, outputLine;
+            String inputLine;
             //Leer la peticion que hace el cliente.
             inputLine = in.readLine();
             //Se busca en el encabezado de la peticion para saber si el recurso solicitado es png o html.
             if (inputLine != null && inputLine.contains("GET")) {
                 String[] encabezado = inputLine.split(" ");
                 String recusro = encabezado[1];
-                if (recusro.contains("png")) {
-                    byte[] image = Reader.imageReader(Search.searchResource(inputLine));
-                    DataOutputStream binaryOut;
-                    binaryOut = new DataOutputStream(clientSocket.getOutputStream());
-                    binaryOut.writeBytes("HTTP/1.1 200 OK \r\n");
-                    binaryOut.writeBytes("Content-Type: image/png\r\n");
-                    binaryOut.writeBytes("Content-Length: " + image.length);
-                    binaryOut.writeBytes("\r\n\r\n");
-                    binaryOut.write(image);
-                    binaryOut.close();
-                } else {
-                    try {
-                        out.println(Reader.htmlReader(Search.searchResource(inputLine)));
-                    } catch (IOException e) {
-                        out.println("HTTP/1.1 404 NOT FOUND\r\n"
-                                + "Content-Type: text/html\r\n"
-                                + "\r\n");
+                try {
+                    if (recusro.contains("png")) {
+                        byte[] image = Reader.imageReader(Search.searchResource(recusro, 1));
+                        DataOutputStream binaryOut;
+                        binaryOut = new DataOutputStream(clientSocket.getOutputStream());
+                        binaryOut.writeBytes(header("200 OK", "image/png\r\n"
+                                + "Content-Length: " + image.length));
+                        binaryOut.write(image);
+                        binaryOut.close();
+                    } else if (recusro.contains("comp")) {
+                        out.println(header("200 OK", "text/html\r\n") + Reader.componentReader(Search.searchResource(recusro, 1), Search.searchResource(recusro, 2)));
+                    } else {
+                        out.println(header("200 OK", "text/html\r\n") + Reader.htmlReader(Search.searchResource(recusro, 1)));
                     }
+                } catch (IOException e) {
+                    out.println(header("404 NOT FOUND", "text/html\r\n"));
+                } catch (Exception ex) {
+                    Logger.getLogger(AnswerRequest.class.getName()).log(Level.SEVERE, null, ex);
+                    out.println(header("404 NOT FOUND", "text/html\r\n"));
                 }
             }
             out.close();

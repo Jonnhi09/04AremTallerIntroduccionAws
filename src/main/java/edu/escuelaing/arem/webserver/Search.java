@@ -34,14 +34,15 @@ public class Search {
     }
 
     /**
-     * La siguiente funcion obtiene la segunda palabra de una cadena. Se usa
+     * La siguiente funcion obtiene la i-esima palabra de una cadena. Se usa
      * para obtener el recurso que se hace en una peticion GET http.
      *
      * @param frase
+     * @param i
      * @return string
      */
-    public static String searchResource(String frase) {
+    public static String searchResource(String frase, int i) {
         String[] palabras = frase.split("\\W+");
-        return palabras[1];
+        return palabras[i];
     }
 }

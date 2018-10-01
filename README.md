@@ -20,6 +20,6 @@ Se debe construir lo siguiente:
 
 6. [ ] Mida el desempeño de su servidor web variando el número de hilos que soporta y aumentando o disminuyendo el número de peticiones concurrentes.
 
-7. [ ] Mejore su servidor para soportar aplicaciones WEB Java. Use el patrón de inversión de control.
+7. [x] Mejore su servidor para soportar aplicaciones WEB Java. Use el patrón de inversión de control.
 
-- En la raíz del repositorio se podrá encontrar el artículo y los diagramas en astah que componen la arquitectura del proyecto. Dentro del artículo se encuentra el informe sobre el cliente en AWS.
+- En la raíz del repositorio se podrá encontrar el artículo y los diagramas en astah que componen la arquitectura del taller. Dentro del artículo se encuentra el informe sobre el cliente en AWS.

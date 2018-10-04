@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  * La clase HttpServer se comporta como un servidor web, el cual recibe
- * peticiones por medio del protocolo http y responde de manera concurrente con
+ * peticiones de manera concurrente usando el protocolo http, y responde con
  * recursos html y png usando este mismo protocolo.
  *
  * @author Jonathan Prieto

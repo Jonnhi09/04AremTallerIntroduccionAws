@@ -70,10 +70,10 @@ public class AnswerRequest implements Runnable {
                         out.println(header("200 OK", "text/html\r\n") + Reader.htmlReader(Search.searchResource(recusro, 1)));
                     }
                 } catch (IOException e) {
-                    out.println(header("404 NOT FOUND", "text/html\r\n"));
+                    out.println(header("404 NOT FOUND", "text/html\r\n") + "<h1> 404 PAGE NOT FOUND </h1> <h3> This is not the web page you are looking for. </h3>");
                 } catch (Exception ex) {
                     Logger.getLogger(AnswerRequest.class.getName()).log(Level.SEVERE, null, ex);
-                    out.println(header("404 NOT FOUND", "text/html\r\n"));
+                    out.println(header("404 NOT FOUND", "text/html\r\n") + "<h1> 404 PAGE NOT FOUND </h1> <h3> This is not the web page you are looking for. </h3>");
                 }
             }
             out.close();

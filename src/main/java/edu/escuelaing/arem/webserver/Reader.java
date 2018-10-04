@@ -60,9 +60,16 @@ public class Reader {
         return bytesPage;
     }
 
+    /**
+     * Usar un componente (app) y ejecutar un metodo que ofrece dicho
+     * componente.
+     *
+     * @param app String, nombre del componente.
+     * @param metodo String, nombre del metodo.
+     * @return String, respuesta del metodo invocado.
+     * @throws Exception
+     */
     public static String componentReader(String app, String metodo) throws Exception {
-        String component = "edu.escuelaing.arem.components." + app;
-        String args[] = {component, metodo};
-        return ReflexWebServer.component(args);
+        return ReflexWebServer.component("edu.escuelaing.arem.components." + app, metodo);
     }
 }

@@ -10,9 +10,20 @@ import edu.escuelaing.arem.reflection.Mapping;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * La clase SystemDate permite conocer informacion asociada al día, hora, region
+ * y fecha del sistema.
+ *
+ * @author Jonathan Prieto
+ */
 @Component
 public class SystemDate {
 
+    /**
+     * Fecha actual del sistema.
+     *
+     * @return Date
+     */
     @Mapping(name = "date")
     public Date date() {
         return Calendar.getInstance().getTime();
